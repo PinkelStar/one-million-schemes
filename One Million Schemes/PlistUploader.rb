@@ -16,7 +16,7 @@ class PlistUploader
   end
 
   def initialize(&block)
-    url = NSURL.URLWithString("http://schemes.zwapp.com/schemes")
+    url = NSURL.URLWithString("http://schemes.staging.zwapp.com/")
     @request = NSMutableURLRequest.requestWithURL(url)
     
     @request.setHTTPMethod("POST")
@@ -28,8 +28,13 @@ class PlistUploader
   end
   
   def start(plistData, twitterName)
-    hash = { :plists => plistData }
-    hash[:twitter_name] = twitterName if twitterName && !twitterName.empty?
+    hash = { 
+      :plist_submission => {
+        :data => plistData
+      }
+    }
+    
+    hash[:plist_submission][:twitter_name] = twitterName if twitterName && !twitterName.empty?
     
     json = hash.to_json
 

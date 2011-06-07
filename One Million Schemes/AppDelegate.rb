@@ -53,15 +53,15 @@ class AppDelegate
   
   def uploadWithoutTwitterName(sender)
     NSApp.endSheet(twitterPromptWindow)
-    self.twitterName.stringValue = nil
-    uploadAppList
+    uploadAppList(nil)
   end
   
   def uploadWithTwitterName(sender)
     NSApp.endSheet(twitterPromptWindow)
-    TwitterNameChecker.start(self.twitterName.stringValue) do |valid|
+    twitterName = self.twitterName.stringValue
+    TwitterNameChecker.start(twitterName) do |valid|
       if valid
-        uploadAppList
+        uploadAppList(twitterName)
       else
         self.errorLabel.stringValue = "can't seem to find it"
         promptForTwitterName
@@ -73,8 +73,8 @@ class AppDelegate
     sheet.orderOut(self)
   end
   
-  def uploadAppList
-    PlistUploader.start(@recentAppList, self.twitterName.stringValue) do
+  def uploadAppList(twitterName)
+    PlistUploader.start(@recentAppList, twitterName) do
       @notificationCenter.postNotificationName("UploadingFinished", object: self)
       toggleUIState
     end
