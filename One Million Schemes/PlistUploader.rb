@@ -62,11 +62,12 @@ class PlistUploader
     when 200...300
       NSLog("#{@response.statusCode} - All good in the hood")
       @responseBody = NSString.alloc.initWithData(@downloadData, encoding:NSUTF8StringEncoding)
-      @callback.call if @callback.respond_to?(:call)
+      @callback.call(true) if @callback.respond_to?(:call)
     when 300...400
       NSLog("#{@response.statusCode} - Got a redirect :(") # need to handle it better
     else
       NSLog("#{@response.statusCode} - Uploading the Plist data failed :(")
+      @callback.call(false) if @callback.respond_to?(:call)
     end
   end
 end

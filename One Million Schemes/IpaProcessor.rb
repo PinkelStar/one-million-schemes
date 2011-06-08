@@ -43,6 +43,8 @@ class IpaProcessor
   
     IPA_GCD_GROUP.notify(@queue) do
       Dispatch::Queue.main.async { block.call(self.appList) }
+      # this should only fire AFTER the call above has completed
+      # TODO: CHANGE
       updateStatus("ProcessingFinished")
     end
   
@@ -70,7 +72,7 @@ class IpaProcessor
         :app_plist   => appPlist
       }
     
-      @appList << appDetails
+      Dispatch::Queue.main.sync { @appList << appDetails }
     else
       logFailure(:noPlistFound, ipaFile)
     end
