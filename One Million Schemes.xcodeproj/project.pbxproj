@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		DD14445C13683ECE007F615D /* TwitterNameChecker.rb in Resources */ = {isa = PBXBuildFile; fileRef = DD14445B13683ECE007F615D /* TwitterNameChecker.rb */; };
-		DD87019D139FC4D4000940FB /* title.png in Resources */ = {isa = PBXBuildFile; fileRef = DD87019C139FC4D4000940FB /* title.png */; };
+		DD8701A0139FDF18000940FB /* title.png in Resources */ = {isa = PBXBuildFile; fileRef = DD87019F139FDF18000940FB /* title.png */; };
 		DD9CBD41135EF9A800A00C20 /* MacRuby.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DD9CBD40135EF9A800A00C20 /* MacRuby.framework */; };
 		DD9CBD45135EFA4A00A00C20 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DD9CBD44135EFA4A00A00C20 /* Foundation.framework */; };
 		DD9CBD51135F097700A00C20 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DD9CBD50135F097700A00C20 /* AppKit.framework */; };
@@ -35,7 +35,7 @@
 
 /* Begin PBXFileReference section */
 		DD14445B13683ECE007F615D /* TwitterNameChecker.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = TwitterNameChecker.rb; sourceTree = "<group>"; };
-		DD87019C139FC4D4000940FB /* title.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = title.png; sourceTree = "<group>"; };
+		DD87019F139FDF18000940FB /* title.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = title.png; sourceTree = "<group>"; };
 		DD9CBD40135EF9A800A00C20 /* MacRuby.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MacRuby.framework; path = ../../../../../../Library/Frameworks/MacRuby.framework; sourceTree = "<group>"; };
 		DD9CBD44135EFA4A00A00C20 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		DD9CBD50135F097700A00C20 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -124,7 +124,7 @@
 		DDCC7A50135D81D6009D099C /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				DD87019C139FC4D4000940FB /* title.png */,
+				DD87019F139FDF18000940FB /* title.png */,
 				DD9CBD52135F0D6100A00C20 /* Zwapp_Icons.icns */,
 				DDCC7A51135D81D6009D099C /* MainMenu.xib */,
 			);
@@ -213,7 +213,7 @@
 				DDCC7A84135DCB18009D099C /* PlistUploader.rb in Resources */,
 				DD9CBD53135F0D6100A00C20 /* Zwapp_Icons.icns in Resources */,
 				DD14445C13683ECE007F615D /* TwitterNameChecker.rb in Resources */,
-				DD87019D139FC4D4000940FB /* title.png in Resources */,
+				DD8701A0139FDF18000940FB /* title.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

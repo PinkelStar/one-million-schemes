@@ -19,24 +19,24 @@ class AppDelegate
   def setupNotificationsObservers
     @notificationCenter = NSNotificationCenter.defaultCenter
     
-    @notificationCenter.addObserver(self,
-                                    selector: "appsFound:",
-                                    name: "AppsFound",
-                                    object: nil)
-    
-    @notificationCenter.addObserver(self,
-                                    selector: "processingFinished:",
-                                    name: "ProcessingFinished",
-                                    object: nil) 
-    
-    @notificationCenter.addObserver(self,
-                                    selector: "uploadingFinished:",
-                                    name: "UploadingFinished",
-                                    object: nil) 
+    ["appsFound", 
+     "processingFinished", 
+     "uploadingStarted", 
+     "uploadingFinished"].each do |name|
+      addNotificationObserver(name)
+    end
+  end
+  
+  def addNotificationObserver(name)
+    titleized = name[0].capitalize + name[1..-1]
+    @notificationCenter.addObserver(self, selector: "#{name}:", name: titleized, object: nil)
   end
   
   def startUpload(sender)
+    increaseFrameSize
+    
     toggleUIState
+    
     IpaProcessor.updateApps do |appList|
       @recentAppList = appList
       promptForTwitterName
@@ -77,7 +77,20 @@ class AppDelegate
     PlistUploader.start(@recentAppList, twitterName) do
       @notificationCenter.postNotificationName("UploadingFinished", object: self)
       toggleUIState
+      reduceFrameSize
     end
+  end
+
+  def increaseFrameSize
+    newFrame = self.window.frame
+    newFrame.size.height += 75
+    self.window.setFrame(newFrame, display: true, animate: true)  
+  end
+  
+  def reduceFrameSize
+    newFrame = self.window.frame
+    newFrame.size.height -= 75
+    self.window.setFrame(newFrame, display: true, animate: true)  
   end
   
   def toggleUIState
@@ -98,8 +111,13 @@ class AppDelegate
     self.statusLabel.stringValue = "Time to upload ..."
   end
   
+  def uploadingStarted(notification)
+    self.statusLabel.stringValue = "Uploading ..."
+  end
+  
   def uploadingFinished(notification)
-    self.statusLabel.stringValue = "All Done!"
+    self.statusLabel.stringValue = ""
+    self.startButton.title = "View my results!"
   end
   
   def windowWillClose(sender)

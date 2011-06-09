@@ -40,6 +40,9 @@ class PlistUploader
 
     @request.setHTTPBody(json.dataUsingEncoding(NSUTF8StringEncoding))
     
+    NSNotificationCenter.defaultCenter.
+      postNotificationName("UploadingStarted", object: self, userInfo: {})
+    
     NSURLConnection.connectionWithRequest(@request, delegate:self)
   end
   
