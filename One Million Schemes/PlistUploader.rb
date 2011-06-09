@@ -16,7 +16,7 @@ class PlistUploader
   end
 
   def initialize(&block)
-    url = NSURL.URLWithString("http://schemes.staging.zwapp.com/")
+    url = NSURL.URLWithString("http://schemes.zwapp.com/")
     @request = NSMutableURLRequest.requestWithURL(url)
     
     @request.setHTTPMethod("POST")

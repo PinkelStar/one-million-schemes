@@ -42,7 +42,9 @@ class IpaProcessor
     end
   
     IPA_GCD_GROUP.notify(@queue) do
-      Dispatch::Queue.main.async do 
+      NSLog("Apps found and about to be sent : #{self.appList.count}")
+      NSLog("failures : #{self.failures.inspect}")
+      Dispatch::Queue.main.async do
         block.call(self.appList)
         updateStatus("ProcessingFinished")
       end
@@ -67,7 +69,7 @@ class IpaProcessor
       appHash  = processRawPlist(rawPlist)
       appPlist = openAndProcessAppSpecificPlist(ipaFile)
     
-      removePersonalData(appHash)
+      appHash = removePersonalData(appHash)
       
       appDetails = {
         :itunes_meta => appHash,
@@ -84,14 +86,19 @@ class IpaProcessor
 
   # who knew it wasn't standardized :)
   def removePersonalData(appHash)
-    appHash.delete("appleId")
-    appHash.delete("appleID")
-    appHash.delete("AppleId")
-    appHash.delete("AppleID")
+    safeAppHash = appHash.dup
     
-    if appHash["com.apple.iTunesStore.downloadInfo"]
-      appHash["com.apple.iTunesStore.downloadInfo"].delete("accountInfo")
+    safeAppHash.delete("appleId")
+    safeAppHash.delete("appleID")
+    safeAppHash.delete("AppleId")
+    safeAppHash.delete("AppleID")
+    
+    if safeAppHash["com.apple.iTunesStore.downloadInfo"]
+      safeAppHash["com.apple.iTunesStore.downloadInfo"] = safeAppHash["com.apple.iTunesStore.downloadInfo"].dup
+      safeAppHash["com.apple.iTunesStore.downloadInfo"].delete("accountInfo")
     end
+    
+    safeAppHash
   end
 
   def openAndProcessAppSpecificPlist(ipaFile)
