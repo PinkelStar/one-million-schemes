@@ -73,8 +73,6 @@ class IpaProcessor
         :itunes_meta => appHash,
         :app_plist   => appPlist
       }
-      
-      puts "\n\n\n\n\n\n #{appHash.inspect} \n\n #{appPlist.inspect} \n\n\n\n\n\n"
     
       Dispatch::Queue.main.sync { @appList << appDetails }
     else
