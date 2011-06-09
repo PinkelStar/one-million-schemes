@@ -8,6 +8,7 @@
 
 class AppDelegate
   attr_accessor :window, :twitterPromptWindow
+  attr_accessor :mainText, :secondaryText
   attr_accessor :progressIndicator, :startButton, :statusLabel
   attr_accessor :twitterName, :errorLabel
   attr_accessor :notificationCenter
@@ -82,15 +83,17 @@ class AppDelegate
   end
 
   def increaseFrameSize
-    newFrame = self.window.frame
-    newFrame.size.height += 75
-    self.window.setFrame(newFrame, display: true, animate: true)  
+    changeFrameHeight(75)
   end
   
   def reduceFrameSize
+    changeFrameHeight(-75)
+  end
+  
+  def changeFrameHeight(heightDifference)
     newFrame = self.window.frame
-    newFrame.size.height -= 75
-    self.window.setFrame(newFrame, display: true, animate: true)  
+    newFrame.size.height += heightDifference
+    self.window.setFrame(newFrame, display: true, animate: true)    
   end
   
   def toggleUIState
@@ -117,6 +120,8 @@ class AppDelegate
   
   def uploadingFinished(notification)
     self.statusLabel.stringValue = ""
+    self.mainText.stringValue = "Thanks for helping the developer community by uploading app data that will help improve and innovate inter-app communication."
+    self.secondaryText.stringValue = "And don't forget to tell your friends to scan their iTunes data as well :)" 
     self.startButton.title = "View my results!"
   end
   

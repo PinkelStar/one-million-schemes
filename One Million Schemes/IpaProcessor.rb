@@ -42,10 +42,10 @@ class IpaProcessor
     end
   
     IPA_GCD_GROUP.notify(@queue) do
-      Dispatch::Queue.main.async { block.call(self.appList) }
-      # this should only fire AFTER the call above has completed
-      # TODO: CHANGE
-      updateStatus("ProcessingFinished")
+      Dispatch::Queue.main.async do 
+        block.call(self.appList)
+        updateStatus("ProcessingFinished")
+      end
     end
   
     true
