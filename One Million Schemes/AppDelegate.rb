@@ -8,10 +8,16 @@
 
 class AppDelegate
   attr_accessor :window, :twitterPromptWindow
+  
   attr_accessor :mainText, :secondaryText
   attr_accessor :progressIndicator, :startButton, :statusLabel
   attr_accessor :twitterName, :errorLabel
+  
   attr_accessor :notificationCenter
+  
+  attr_accessor :submissionId
+  
+  NOTIFICATION_TYPES = ["appsFound", "processingFinished", "uploadingStarted", "uploadingFinished"]
   
   def applicationDidFinishLaunching(notification)
     setupNotificationsObservers
@@ -20,10 +26,7 @@ class AppDelegate
   def setupNotificationsObservers
     @notificationCenter = NSNotificationCenter.defaultCenter
     
-    ["appsFound", 
-     "processingFinished", 
-     "uploadingStarted", 
-     "uploadingFinished"].each do |name|
+    NOTIFICATION_TYPES.each do |name|
       addNotificationObserver(name)
     end
   end
@@ -42,6 +45,10 @@ class AppDelegate
       @recentAppList = appList
       promptForTwitterName
     end
+  end
+  
+  def openSubmissionResults(sender)
+    NSWorkspace.sharedWorkspace.openURL(NSURL.URLWithString("http://schemes.zwapp.com/#{self.submissionId}"))
   end
   
   def promptForTwitterName
@@ -75,11 +82,30 @@ class AppDelegate
   end
   
   def uploadAppList(twitterName)
-    PlistUploader.start(@recentAppList, twitterName) do
-      @notificationCenter.postNotificationName("UploadingFinished", object: self)
-      toggleUIState
-      reduceFrameSize
+    PlistUploader.start(@recentAppList, twitterName) do |success, submissionId|
+      if success
+        self.submissionId = submissionId
+        @notificationCenter.postNotificationName("UploadingFinished", object: self)
+        toggleUIState
+        reduceFrameSize
+      else
+        showUploadFailedSheet
+      end
     end
+  end
+  
+  def showUploadFailedSheet
+    alert = NSAlert.alertWithMessageText("Sorry but there was an error completing the scan",
+                                         defaultButton: nil,
+                                         alternateButton: nil,
+                                         otherButton: nil,
+                                         informativeTextWithFormat: "There was an error while uploading the app scheme data, if you continue to experience a problem please email contact@zwapp.com")
+    
+    alert.beginSheetModalForWindow(self.window, modalDelegate:self, didEndSelector:"uploadFailedAlertDidEnd:returnCode:contextInfo:", contextInfo:nil)
+  end
+  
+  def uploadFailedAlertDidEnd(alert, returnCode: returnCode, contextInfo: contextInfo)
+    resetUI
   end
 
   def increaseFrameSize
@@ -94,6 +120,13 @@ class AppDelegate
     newFrame = self.window.frame
     newFrame.size.height += heightDifference
     self.window.setFrame(newFrame, display: true, animate: true)    
+  end
+  
+  def resetUI
+    self.progressIndicator.stopAnimation(self)
+    self.startButton.enabled = true
+    self.statusLabel.stringValue = ""
+    reduceFrameSize
   end
   
   def toggleUIState
@@ -123,6 +156,7 @@ class AppDelegate
     self.mainText.stringValue = "Thanks for helping the developer community by uploading app data that will help improve and innovate inter-app communication."
     self.secondaryText.stringValue = "And don't forget to tell your friends to scan their iTunes data as well :)" 
     self.startButton.title = "View my results!"
+    self.startButton.action = "openSubmissionResults:"
   end
   
   def windowWillClose(sender)

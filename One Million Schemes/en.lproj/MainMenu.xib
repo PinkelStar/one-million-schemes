@@ -1444,7 +1444,7 @@
 								<int key="NSCellFlags">67239424</int>
 								<int key="NSCellFlags2">138412032</int>
 								<string key="NSContents">Zwapp is committed to your privacy. We do not access nor store private or personal information.</string>
-								<object class="NSFont" key="NSSupport" id="797934783">
+								<object class="NSFont" key="NSSupport" id="851159305">
 									<string key="NSName">LucidaGrande</string>
 									<double key="NSSize">11</double>
 									<int key="NSfFlags">16</int>
@@ -1607,7 +1607,7 @@
 								<int key="NSCellFlags">67239424</int>
 								<int key="NSCellFlags2">272629760</int>
 								<string key="NSContents">Add your Twitter name so we can show your name and picture in our contributors list</string>
-								<reference key="NSSupport" ref="797934783"/>
+								<reference key="NSSupport" ref="851159305"/>
 								<reference key="NSControlView" ref="733234977"/>
 								<reference key="NSBackgroundColor" ref="1011532058"/>
 								<reference key="NSTextColor" ref="908909904"/>
@@ -3541,6 +3541,7 @@
 							<reference ref="372234753"/>
 						</object>
 						<reference key="parent" ref="0"/>
+						<string key="objectName">Window - Window</string>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">566</int>
@@ -4267,7 +4268,7 @@
 				<reference key="dict.values" ref="0"/>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">602</int>
+			<int key="maxID">618</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -4279,6 +4280,7 @@
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>openSubmissionResults:</string>
 							<string>startUpload:</string>
 							<string>uploadWithTwitterName:</string>
 							<string>uploadWithoutTwitterName:</string>
@@ -4286,6 +4288,7 @@
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>id</string>
 							<string>id</string>
 							<string>id</string>
 							<string>id</string>
@@ -4296,6 +4299,7 @@
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>openSubmissionResults:</string>
 							<string>startUpload:</string>
 							<string>uploadWithTwitterName:</string>
 							<string>uploadWithoutTwitterName:</string>
@@ -4303,6 +4307,10 @@
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<object class="IBActionInfo">
+								<string key="name">openSubmissionResults:</string>
+								<string key="candidateClassName">id</string>
+							</object>
 							<object class="IBActionInfo">
 								<string key="name">startUpload:</string>
 								<string key="candidateClassName">id</string>
@@ -4332,12 +4340,16 @@
 							<string>secondaryText</string>
 							<string>startButton</string>
 							<string>statusLabel</string>
+							<string>submissionId</string>
 							<string>twitterName</string>
 							<string>twitterPromptWindow</string>
+							<string>uploadingErrorWindow</string>
 							<string>window</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>id</string>
+							<string>id</string>
 							<string>id</string>
 							<string>id</string>
 							<string>id</string>
@@ -4361,8 +4373,10 @@
 							<string>secondaryText</string>
 							<string>startButton</string>
 							<string>statusLabel</string>
+							<string>submissionId</string>
 							<string>twitterName</string>
 							<string>twitterPromptWindow</string>
+							<string>uploadingErrorWindow</string>
 							<string>window</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
@@ -4396,11 +4410,19 @@
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBToOneOutletInfo">
+								<string key="name">submissionId</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBToOneOutletInfo">
 								<string key="name">twitterName</string>
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">twitterPromptWindow</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">uploadingErrorWindow</string>
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBToOneOutletInfo">

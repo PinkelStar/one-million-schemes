@@ -67,10 +67,14 @@ class IpaProcessor
       appHash  = processRawPlist(rawPlist)
       appPlist = openAndProcessAppSpecificPlist(ipaFile)
     
+      removePersonalData(appHash)
+      
       appDetails = {
         :itunes_meta => appHash,
         :app_plist   => appPlist
       }
+      
+      puts "\n\n\n\n\n\n #{appHash.inspect} \n\n #{appPlist.inspect} \n\n\n\n\n\n"
     
       Dispatch::Queue.main.sync { @appList << appDetails }
     else
@@ -78,6 +82,18 @@ class IpaProcessor
     end
   rescue StandardError => e
     logFailure(:errorProcessingIpa, ipaFile, e)
+  end
+
+  # who knew it wasn't standardized :)
+  def removePersonalData(appHash)
+    appHash.delete("appleId")
+    appHash.delete("appleID")
+    appHash.delete("AppleId")
+    appHash.delete("AppleID")
+    
+    if appHash["com.apple.iTunesStore.downloadInfo"]
+      appHash["com.apple.iTunesStore.downloadInfo"].delete("accountInfo")
+    end
   end
 
   def openAndProcessAppSpecificPlist(ipaFile)
